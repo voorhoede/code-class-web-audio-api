@@ -8,9 +8,8 @@
 {% endblock %}
 
 {% block introduction %}
-	{# TODO: add title and description of answer #}
 	<h1>Answer: Exercise 2 - Add effects to your audio</h1>
-	<p>[DESCRIPTION]</p>
+	<p>You now hear an a-major chord. You can create the chord with the Web Audio API and add effects like a delay and some gain.</p>
 {% endblock %}
 
 {% block html %}
@@ -61,7 +60,7 @@
 			const sineB = audioCtx.createOscillator()
 			const delayNodeB = audioCtx.createDelay()
 			delayNodeB.delayTime.value = .33;
-			sineB.frequency.value = 523.25
+			sineB.frequency.value = 554.37
 			sineB.start()
 			sineB.connect(delayNodeB)
 			delayNodeB.connect(volume)
