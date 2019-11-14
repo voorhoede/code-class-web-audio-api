@@ -8,9 +8,8 @@
 {% endblock %}
 
 {% block introduction %}
-	{# TODO: add title and description of answer #}
 	<h1>Answer: Exercise 3 - Applied Web Audio API</h1>
-	<p>[DESCRIPTION]</p>
+	<p>You can now validate a form and play a sound on success or error. Creating the sound with the Web Audio API you own now.</p>
 {% endblock %}
 
 {% block html %}
@@ -37,6 +36,8 @@
 		const submitButton = document.querySelector('.submit-button')
 		const textField = document.querySelector('.text-field')
 
+		let audioCtx
+
 		successButton.addEventListener('click', playSuccessAudio)
 		errorButton.addEventListener('click', playErrorAudio)
 		submitButton.addEventListener('click', validateForm)
@@ -53,10 +54,37 @@
 
 		function playSuccessAudio() {
 			console.log('success')
+			audioCtx = new AudioContext()
+
+			const successNoise = audioCtx.createOscillator()
+			successNoise.frequency = 600
+			successNoise.frequency.exponentialRampToValueAtTime(
+				800,
+				audioCtx.currentTime + 0.05
+			)
+
+			successNoise.connect(audioCtx.destination)
+
+			successNoise.start();
+			successNoise.stop(audioCtx.currentTime + 0.3)
+
 		}
 
 		function playErrorAudio() {
 			console.log('error')
+			audioCtx = new AudioContext()
+
+			const errorNoise = audioCtx.createOscillator()
+    	errorNoise.frequency = 400
+    	errorNoise.frequency.exponentialRampToValueAtTime(
+				200,
+				audioCtx.currentTime + 0.05
+			)
+
+			errorNoise.connect(audioCtx.destination)
+
+    	errorNoise.start();
+    	errorNoise.stop(audioCtx.currentTime + 0.3)
 		}
 	</script>
 {% endblock %}
