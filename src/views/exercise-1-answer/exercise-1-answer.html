@@ -1,0 +1,76 @@
+{% extends "views/_base/base.html" %}
+
+{% block navigation %}
+	<nav class="cc-navigation">
+		<a href="/exercise-1/" class="cc-back-link">&#8592; Back to exercise 1</a>
+		<a href="/exercise-2/" class="cc-answer-link">Next exercise &#8594;</a>
+	</nav>
+{% endblock %}
+
+{% block introduction %}
+	{# TODO: add title and description of answer #}
+	<h1>Answer: Exercise 1 - Setting up</h1>
+	<p>[DESCRIPTION]</p>
+{% endblock %}
+
+{% block html %}
+	<section class="cc-html-playground">
+		<button class="record-button">Record</button>
+	</section>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		const recordButton = document.querySelector('button');
+		const constraints = { audio: true, video: false }
+
+		let recordingStream, audioCtx
+		let isRecording = false
+
+		recordButton.addEventListener('click', toggleRecording)
+
+		function toggleRecording() {
+			if (isRecording) {
+				stopStream()
+			} else {
+				navigator.mediaDevices.getUserMedia(constraints)
+					.then(stream => {
+						startStream(stream)
+					}).catch(err => {
+					console.log('The following gUM error occured: ' + err)
+				})
+			}
+		}
+
+		function startStream(stream) {
+			isRecording = true
+			recordButton.childNodes[0].nodeValue = 'Stop recording'
+			recordingStream = stream
+
+			audioCtx = new AudioContext()
+			const options = { mediaStream: stream }
+
+      const source = new MediaStreamAudioSourceNode(audioCtx, options)
+      source.connect(audioCtx.destination)
+		}
+
+		function stopStream() {
+			isRecording = false
+			recordButton.childNodes[0].nodeValue = 'Record'
+
+			audioCtx.close()
+			recordingStream.getTracks().forEach(track => { track.stop() })
+		}
+	</script>
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+		/*{# TODO: add CSS of answer #}*/
+		.record-button {
+			background: tomato;
+			padding: 1rem 2rem;
+			color: white;
+		}
+	</style>
+{% endblock %}
