@@ -1,0 +1,89 @@
+{% extends "views/_base/base.html" %}
+
+{% block navigation %}
+	<nav class="cc-navigation">
+		<a href="/exercise-3/" class="cc-back-link">&#8592; Back to exercise 3</a>
+		<a href="/secret-bonus/" class="cc-answer-link">See a bonus answer &#8594;</a>
+	</nav>
+{% endblock %}
+
+{% block introduction %}
+	{# TODO: add title and description of answer #}
+	<h1>Answer: Exercise 3 - Applied Web Audio API</h1>
+	<p>[DESCRIPTION]</p>
+{% endblock %}
+
+{% block html %}
+	<section class="cc-html-playground">
+		<div class="play">
+			<button class="play-button play-button--success">Play success audio</button>
+			<button class="play-button play-button--error">Play error audio</button>
+		</div>
+		<form>
+			<label class="text-field__label">
+				<span>Write a text</span>
+				<input class="text-field" type="text" required>
+			</label>
+			<button class="submit-button">Submit</button>
+		</form>
+	</section>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		const successButton = document.querySelector('.play-button--success')
+		const errorButton = document.querySelector('.play-button--error')
+
+		const submitButton = document.querySelector('.submit-button')
+		const textField = document.querySelector('.text-field')
+
+		successButton.addEventListener('click', playSuccessAudio)
+		errorButton.addEventListener('click', playErrorAudio)
+		submitButton.addEventListener('click', validateForm)
+
+		function validateForm(e) {
+			e.preventDefault()
+
+			if (textField.checkValidity()) {
+				playSuccessAudio()
+			} else {
+				playErrorAudio()
+			}
+		}
+
+		function playSuccessAudio() {
+			console.log('success')
+		}
+
+		function playErrorAudio() {
+			console.log('error')
+		}
+	</script>
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+		.play {
+			margin-bottom: 1rem;
+		}
+
+		span {
+			display: block;
+		}
+
+		.text-field {
+			padding: 1rem;
+		}
+
+		.play-button,
+		.submit-button {
+			background: tomato;
+			color: white;
+			padding: 1rem 2rem;
+		}
+
+		button[disabled] {
+			background: gray;
+		}
+	</style>
+{% endblock %}
