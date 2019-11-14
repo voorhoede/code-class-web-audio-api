@@ -1,0 +1,97 @@
+{% extends "views/_base/base.html" %}
+
+{% block navigation %}
+	<nav class="cc-navigation">
+		<a href="/exercise-2/" class="cc-back-link">&#8592; Back to exercise 2</a>
+		<a href="/exercise-3/" class="cc-answer-link">Next exercise &#8594;</a>
+	</nav>
+{% endblock %}
+
+{% block introduction %}
+	{# TODO: add title and description of answer #}
+	<h1>Answer: Exercise 2 - Add effects to your audio</h1>
+	<p>[DESCRIPTION]</p>
+{% endblock %}
+
+{% block html %}
+	<section class="cc-html-playground">
+		<button class="audio-button">Start audio</button>
+	</section>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		let audioCtx
+		let audioIsPlaying = false
+
+		const audioButton = document.querySelector('button')
+
+		audioButton.addEventListener('click', toggleAudio)
+
+		function toggleAudio() {
+			audioIsPlaying ? stopAudio() : startAudio()
+		}
+
+		function stopAudio() {
+			audioIsPlaying = false
+			audioButton.childNodes[0].nodeValue = 'Start audio'
+
+			audioCtx.close()
+		}
+
+		function startAudio() {
+			audioIsPlaying = true
+			audioButton.childNodes[0].nodeValue = 'Stop audio'
+
+			audioCtx = new AudioContext()
+
+			const volume = audioCtx.createGain()
+			volume.connect(audioCtx.destination)
+			volume.gain.value = .25
+
+			createAccord(volume)
+		}
+
+		function createAccord(volume) {
+			const sineA = audioCtx.createOscillator()
+			sineA.frequency.value = 440
+			sineA.start()
+			sineA.connect(volume)
+
+			const sineB = audioCtx.createOscillator()
+			const delayNodeB = audioCtx.createDelay()
+			delayNodeB.delayTime.value = .33;
+			sineB.frequency.value = 523.25
+			sineB.start()
+			sineB.connect(delayNodeB)
+			delayNodeB.connect(volume)
+
+			const sineC = audioCtx.createOscillator()
+			const delayNodeC = audioCtx.createDelay()
+			delayNodeC.delayTime.value = .66;
+			sineC.frequency.value = 659.25
+			sineC.start()
+			sineC.connect(delayNodeC)
+			delayNodeC.connect(volume)
+
+			const sineD = audioCtx.createOscillator()
+			const delayNodeD = audioCtx.createDelay()
+			delayNodeD.delayTime.value = 1;
+			sineD.frequency.value = 880
+			sineD.start()
+			sineD.connect(delayNodeD)
+			delayNodeD.connect(volume)
+		}
+
+	</script>
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+		.audio-button {
+			background: tomato;
+			padding: 1rem 2rem;
+			color: white;
+		}
+	</style>
+{% endblock %}
