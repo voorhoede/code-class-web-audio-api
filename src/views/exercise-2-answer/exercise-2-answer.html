@@ -44,18 +44,18 @@
 
 			audioCtx = new AudioContext()
 
-			const volume = audioCtx.createGain()
-			volume.connect(audioCtx.destination)
-			volume.gain.value = .25
+			const gainNode = audioCtx.createGain()
+			gainNode.connect(audioCtx.destination)
+			gainNode.gain.value = .25
 
-			createAccord(volume)
+			createAccord(gainNode)
 		}
 
-		function createAccord(volume) {
+		function createAccord(gainNode) {
 			const sineA = audioCtx.createOscillator()
 			sineA.frequency.value = 440
 			sineA.start()
-			sineA.connect(volume)
+			sineA.connect(gainNode)
 
 			const sineB = audioCtx.createOscillator()
 			const delayNodeB = audioCtx.createDelay()
@@ -63,7 +63,7 @@
 			sineB.frequency.value = 554.37
 			sineB.start()
 			sineB.connect(delayNodeB)
-			delayNodeB.connect(volume)
+			delayNodeB.connect(gainNode)
 
 			const sineC = audioCtx.createOscillator()
 			const delayNodeC = audioCtx.createDelay()
@@ -71,7 +71,7 @@
 			sineC.frequency.value = 659.25
 			sineC.start()
 			sineC.connect(delayNodeC)
-			delayNodeC.connect(volume)
+			delayNodeC.connect(gainNode)
 
 			const sineD = audioCtx.createOscillator()
 			const delayNodeD = audioCtx.createDelay()
@@ -79,7 +79,7 @@
 			sineD.frequency.value = 880
 			sineD.start()
 			sineD.connect(delayNodeD)
-			delayNodeD.connect(volume)
+			delayNodeD.connect(gainNode)
 		}
 
 	</script>

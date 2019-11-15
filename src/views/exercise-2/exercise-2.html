@@ -44,42 +44,18 @@
 
 			audioCtx = new AudioContext()
 
-			const volume = audioCtx.createGain()
-			volume.connect(audioCtx.destination)
-			volume.gain.value = .25
+			// create a gainNode and connect it to a destionation
 
-			createAccord(volume)
+			createAccord(gainNode)
 		}
 
-		function createAccord(volume) {
-			const sineA = audioCtx.createOscillator()
-			sineA.frequency.value = 440
-			sineA.start()
-			sineA.connect(volume)
+		function createAccord(gainNode) {
+			const sineA = audioCtx.createSomething()
+			// set a frequency and start the node
+			sineA.connect(toSomething)
 
-			const sineB = audioCtx.createOscillator()
-			const delayNodeB = audioCtx.createDelay()
-			delayNodeB.delayTime.value = .33;
-			sineB.frequency.value = 554.37
-			sineB.start()
-			sineB.connect(delayNodeB)
-			delayNodeB.connect(volume)
-
-			const sineC = audioCtx.createOscillator()
-			const delayNodeC = audioCtx.createDelay()
-			delayNodeC.delayTime.value = .66;
-			sineC.frequency.value = 659.25
-			sineC.start()
-			sineC.connect(delayNodeC)
-			delayNodeC.connect(volume)
-
-			const sineD = audioCtx.createOscillator()
-			const delayNodeD = audioCtx.createDelay()
-			delayNodeD.delayTime.value = 1;
-			sineD.frequency.value = 880
-			sineD.start()
-			sineD.connect(delayNodeD)
-			delayNodeD.connect(volume)
+			// Now add other oscillators with different frequency values and hear if you can create an a-major chord
+			// As a bonus: add a delay so every oscillator starts at a different moment
 		}
 
 	</script>
