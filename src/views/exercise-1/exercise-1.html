@@ -10,6 +10,7 @@
 {% block introduction %}
 	<h1>Answer: Exercise 1 - Setting up</h1>
 	<p>Set up a stream from you microphone and play it with the Web Audio API. You learn to create nodes and connect a destination.</p>
+	<p>Recommended to only click the button when you listen through some kind of headphones</p>
 {% endblock %}
 
 {% block html %}
@@ -23,7 +24,7 @@
   	const recordButton = document.querySelector('button')
 		recordButton.addEventListener('click', toggleRecording)
 
-		const constraints = { audio: true, video: false }
+		const constraints // Remember this from last code-class? Add constraints to get the user's microphone
 		let recordingStream, audioCtx
 		let isRecording = false
 
@@ -44,10 +45,10 @@
 			recordButton.childNodes[0].nodeValue = 'Stop recording'
 			recordingStream = stream
 
-			audioCtx = new AudioContext()
+			// Create an audio context and create something that handles audio streams
 
-      const source = audioCtx.createMediaStreamSource(stream)
-      source.connect(audioCtx.destination)
+      const source = audioCtx.createSomething()
+      // connect the source to a destination
 		}
 
 		function stopStream() {
